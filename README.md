@@ -27,7 +27,7 @@ Options:
   -?, -h, -H     Displays this usage information.
 </pre>
 ## GCC Compiler
-I used Orwell's fork of Dev-C++ v5.11 running TDM-GCC v4.9.2 with 32/64-bit support. See Orwell's blog http://orwelldevcpp.blogspot.com for more information and download links. If you compile the code without using the provided project files, you may need to add the compiler option -std=gnu11 to add support for raw strings as this is what I used for the graphics, which is a GNU extension. In my brief testing, I only got the raw string to work with TDM-GCC, so if you can't, then you'll have to scape or replace the text-based graphic altogether. 
+I used Orwell's fork of Dev-C++ v5.11 running TDM-GCC v4.9.2 with 32/64-bit support. See Orwell's blog http://orwelldevcpp.blogspot.com for more information and download links. If you compile the code without using the provided project files, you may need to add the compiler option -std=gnu11 to add support for raw strings as this is what I used for the graphics, which is a GNU extension. In my brief testing, I only got the raw strings to work with TDM-GCC, so if you can't, then you'll have to escape or replace the text-based graphic altogether. 
 
 ## Do you have any questions?
 Many commonly asked questions are answered in the FAQ:
