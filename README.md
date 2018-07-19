@@ -11,6 +11,7 @@ Changelog: https://github.com/StevenJDH/The-Terminator/wiki/Changelog
 * Kill running processes by name
 * Rename or delete a file immediately after killing a process
 * Text-based user interface and command line access
+* Support for console colors, which could later become a customizable feature
 * Support for 32/64-bit Windows systems
 
 ## Command line usage

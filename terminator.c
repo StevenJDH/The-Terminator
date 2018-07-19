@@ -28,6 +28,9 @@
 #define VERSION "1.0.0"
 #define VERSION_DATE "2018/07/19"
 
+// Console colors.
+enum colors { BLACK = 0, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GREY, LIGHTBLUE, 
+		LIGHTGREEN, LIGHTAQUA, LIGHTRED, LIGHTPURPLE, LIGHTYELLOW, BRIGHTWHITE };
 
 int argsCLI(int argc, char** argv);
 int printUsage(const char *program_name);
@@ -43,12 +46,16 @@ bool killRenameOption(const char *process_name, const char *old_name, const char
 bool killDeleteOption(const char *process_name, const char *filename);
 bool killProcessByName(const char *process_name);
 const char *gnuBasename(const char *filename);
+void setConsoleColors(enum colors textColor, enum colors bgColor);
 
 int main(int argc, char** argv) {
 	// Using CLI mode if arguments were passed.
 	if (argc > 1) {
 		return argsCLI(argc, argv);
 	}
+
+	// Changes the console's foreground and background colors.
+	setConsoleColors(LIGHTYELLOW, BLUE); 
 	
 	unsigned int choice = 0; // Used for determining which screen to show.
 
@@ -73,12 +80,15 @@ int main(int argc, char** argv) {
 			default:
 				// A controlled exit from the program.
 				printf("\nI'll be back. ");
-				fflush(stdout); // We flush buffer before system() screen I/O, which is required.
-				system("pause");
+				// We flush buffer before system() screen I/O, which is required.
+				fflush(stdout); 
+				// Pauses and then clears screen after unpausing to clean things up.
+				// We also reset console colors in between calls this way to play well with CLS.
+				system("pause & COLOR 07 & cls"); 
 		}
 	}
 	while (99 == choice); // Returns control back to main menu.
-	
+
 	return EXIT_SUCCESS;
 }
 
@@ -389,7 +399,7 @@ bool killProcessByName(const char *process_name)
             {
                 TerminateProcess(hProcess, 9);
                 CloseHandle(hProcess);
-                printf("Terminated process - %s (PID: %d)\n", pEntry.szExeFile, pEntry.th32ProcessID);
+                printf("Terminated process - %s (PID: %lu)\n", pEntry.szExeFile, pEntry.th32ProcessID);
                 hasKilled = true;
             }
     	}
@@ -408,4 +418,9 @@ const char *gnuBasename(const char *filename)
 {
     const char *base = strrchr(filename, '\\'); // Returns pointer to last occurrence or null if none.
     return base ? ++base : filename; // One more than the last occurrence, which is the filename, otherwise it's already the filename.
+}
+
+// Changes the foreground and the background of the console. Default Colors: (WHITE, BLACK).
+void setConsoleColors(enum colors textColor, enum colors bgColor) {
+      SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (textColor + (bgColor * 16)));
 }
