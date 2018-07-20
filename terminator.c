@@ -1,4 +1,4 @@
-/*
+/**
  * This file is part of the Terminator distribution (https://github.com/StevenJDH).
  * Copyright (C) 2018 Steven Jenkins De Haro.
  *
@@ -25,22 +25,24 @@
 #include <unistd.h> /* access, getopt */
 #include <errno.h>
 
+// Update the version information here.
 #define VERSION "1.0.0"
 #define VERSION_DATE "2018/07/19"
 
-// Console colors.
+// Console colors
 enum colors { BLACK = 0, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GREY, LIGHTBLUE, 
 		LIGHTGREEN, LIGHTAQUA, LIGHTRED, LIGHTPURPLE, LIGHTYELLOW, BRIGHTWHITE };
 
+// Prototypes
 int argsCLI(int argc, char** argv);
 int printUsage(const char *program_name);
-void printLogo();
-unsigned int displayMainScreen();
-unsigned int displayKillScreen();
-unsigned int displayKillRenameScreen();
-unsigned int displayKillDeleteScreen();
-unsigned int returnToMainScreen();
-void getStringInput(const char *message, char input[], size_t size);
+void printLogo(void);
+unsigned int displayMainScreen(void);
+unsigned int displayKillScreen(void);
+unsigned int displayKillRenameScreen(void);
+unsigned int displayKillDeleteScreen(void);
+unsigned int returnToMainScreen(void);
+void getStringInput(const char *message, char *input, size_t size);
 bool killOption(const char *process_name);
 bool killRenameOption(const char *process_name, const char *old_name, const char *new_name);
 bool killDeleteOption(const char *process_name, const char *filename);
@@ -48,6 +50,9 @@ bool killProcessByName(const char *process_name);
 const char *gnuBasename(const char *filename);
 void setConsoleColors(enum colors textColor, enum colors bgColor);
 
+/**
+ * Program entry point that controls the operation mode and and screen navigation.
+ */
 int main(int argc, char** argv) {
 	// Using CLI mode if arguments were passed.
 	if (argc > 1) {
@@ -92,7 +97,9 @@ int main(int argc, char** argv) {
 	return EXIT_SUCCESS;
 }
 
-// Command line mode. Takes the arguments for options and values, parses them, and calls the needed operation.
+/**
+ * Command line mode. Takes the arguments for options and values, parses them, and calls the needed operation.
+ */
 int argsCLI(int argc, char** argv) {
 	// Used to set what mode is being requested.
 	enum mode {
@@ -168,10 +175,13 @@ int argsCLI(int argc, char** argv) {
 				return EXIT_SUCCESS;
 			}
 	}
+	
 	return EXIT_FAILURE;
 }
 
-// Provides the usage information for command line use, then exits.
+/**
+ * Provides the usage information for command line use, then exits.
+ */
 int printUsage(const char *program_name) {
 	fprintf(stderr, "\nUsage: %s -? | -k <process_name> [-r <old_filename> -n <new_filename> | -d <filename>]\n", program_name);
 	fputs("\nOptions:\n"
@@ -181,11 +191,14 @@ int printUsage(const char *program_name) {
 		"  -d, -D \t Use with -k plus it deletes a file.\n"
 		"  -?, -h, -H \t Displays this usage information.\n", stderr);
 	fputs("\nI'll be back . . .\n", stderr);
+	
 	return EXIT_FAILURE;
 }
 
-// Displays the main menu screen that provides access to different operations.
-unsigned int displayMainScreen()
+/**
+ * Displays the main menu screen that provides access to different operations.
+ */
+unsigned int displayMainScreen(void)
 {
 	unsigned int selection = 0;
 
@@ -208,8 +221,10 @@ unsigned int displayMainScreen()
 	return selection;
 }
 
-// Kill Process screen to manually enter required information.
-unsigned int displayKillScreen() {
+/**
+ * Kill Process screen to manually enter required information.
+ */
+unsigned int displayKillScreen(void) {
 	printLogo();
 	
 	char processName[50+1+1]; // n+1 for null terminator, n+1+1 for newline from fgets.
@@ -223,8 +238,10 @@ unsigned int displayKillScreen() {
 	return returnToMainScreen();
 }
 
-// Kill and Rename screen to manually enter required information.
-unsigned int displayKillRenameScreen() {
+/** 
+ * Kill and Rename screen to manually enter required information.
+ */
+unsigned int displayKillRenameScreen(void) {
 	printLogo();
 	
 	char processName[50+1+1]; // n+1 for null terminator, n+1+1 for newline from fgets.
@@ -242,8 +259,10 @@ unsigned int displayKillRenameScreen() {
 	return returnToMainScreen();
 }
 
-// Kill and Delete screen to manually enter required information.
-unsigned int displayKillDeleteScreen() {
+/**
+ * Kill and Delete screen to manually enter required information.
+ */
+unsigned int displayKillDeleteScreen(void) {
 	printLogo();
 	
 	char processName[50+1+1]; // n+1 for null terminator, n+1+1 for newline from fgets.
@@ -259,8 +278,10 @@ unsigned int displayKillDeleteScreen() {
 	return returnToMainScreen();
 }
 
-// Prompts user with custom message and retrieves their input.
-void getStringInput(const char *message, char input[], size_t size) {
+/**
+ * Prompts user with custom message and retrieves their input.
+ */
+void getStringInput(const char *message, char *input, size_t size) {
 	size_t len = 0;
 	
 	printf(message);
@@ -277,7 +298,9 @@ void getStringInput(const char *message, char input[], size_t size) {
 	}
 }
 
-// Terminates a process by name. This is just a cleaner wrapper function for killProcessByName().
+/**
+ * Terminates a process by name. This is just a wrapper function for killProcessByName().
+ */
 bool killOption(const char *process_name) {
 	if (killProcessByName(process_name) == false) {
 		fprintf(stderr, "Error: Process '%s' was not found.\n", process_name);
@@ -286,7 +309,9 @@ bool killOption(const char *process_name) {
 	return true;
 }
 
-// Terminates a process and renames a file that was locked by that process.
+/**
+ * Terminates a process and renames a file that was locked by that process.
+ */
 bool killRenameOption(const char *process_name, const char *old_name, const char *new_name) {
 	if (strcasecmp(old_name, new_name) == 0) {
 		fprintf(stderr, "Error: New filename '%s' is the same as the original.\n", gnuBasename(new_name));
@@ -307,7 +332,9 @@ bool killRenameOption(const char *process_name, const char *old_name, const char
 	return false;
 }
 
-// Terminates a process and deletes a file that was locked by that process.
+/**
+ * Terminates a process and deletes a file that was locked by that process.
+ */
 bool killDeleteOption(const char *process_name, const char *filename) {
 	if (killProcessByName(process_name) == false) {
 		fprintf(stderr, "Error: Process '%s' was not found. The file '%s' will not be deleted.\n", process_name, gnuBasename(filename));
@@ -323,8 +350,10 @@ bool killDeleteOption(const char *process_name, const char *filename) {
 	return false;
 }
 
-// Generates and displays the application's title logo.
-void printLogo()
+/**
+ * Generates and displays the application's title logo.
+ */
+void printLogo(void)
 {
 	system("cls"); // Clears the console window.
 	
@@ -355,8 +384,10 @@ printf(R"(
 )", VERSION, VERSION_DATE);
 }
 
-// Handles returning back to the main menu.
-unsigned int returnToMainScreen()
+/**
+ * Handles returning back to the main menu.
+ */
+unsigned int returnToMainScreen(void)
 {
 	printf("\nReturning to the main menu. ");
 	fflush(stdout); // We flush buffer before system() screen I/O, which is required.
@@ -364,7 +395,9 @@ unsigned int returnToMainScreen()
 	return 99; // Special code to return to main menu.
 }
 
-// Terminates any running processes that match the process name passed to it.
+/**
+ * Terminates any running processes that match the process name passed to it.
+ */
 bool killProcessByName(const char *process_name)
 {
 	bool hasKilled = false;
@@ -409,18 +442,22 @@ bool killProcessByName(const char *process_name)
     return hasKilled;
 }
 
-// Simple way to get filename from path using the non-modifying approach of the GNU basename() function that
-// is manually provided here rather than dealing with compiler options like -D_GNU_SOURCE and directives like
-// #define _GNU_SOURCE with #include <string.h> to attempt to override the explicit or implicit inclusion of
-// POSIX's #include <libgen.h> which has its own basename() function that modifies a cstring, and therefore, 
-// needs a cast of (char *) when a const char * is used. The result is more portable and safer code.
+/**
+ * Simple way to get filename from path using the non-modifying approach of the GNU basename() function that
+ * is manually provided here rather than dealing with compiler options like -D_GNU_SOURCE and directives like
+ * #define _GNU_SOURCE with #include <string.h> to attempt to override the explicit or implicit inclusion of
+ * POSIX's #include <libgen.h> which has its own basename() function that modifies a cstring, and therefore, 
+ * needs a cast of (char *) when a const char * is used. The result is more portable and safer code.
+ */
 const char *gnuBasename(const char *filename)
 {
     const char *base = strrchr(filename, '\\'); // Returns pointer to last occurrence or null if none.
-    return base ? ++base : filename; // One more than the last occurrence, which is the filename, otherwise it's already the filename.
+	return base ? ++base : filename; // One more than the last occurrence, which is the filename, otherwise it's already the filename.
 }
 
-// Changes the foreground and the background of the console. Default Colors: (WHITE, BLACK).
+/**
+ * Changes the foreground and the background of the console. Default Colors: (WHITE, BLACK).
+ */
 void setConsoleColors(enum colors textColor, enum colors bgColor) {
-      SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (textColor + (bgColor * 16)));
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (textColor + (bgColor * 16)));
 }
