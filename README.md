@@ -17,14 +17,14 @@ Changelog: https://github.com/StevenJDH/The-Terminator/wiki/Changelog
 ## Command line usage
 Below is the usage information that is needed to run the program via the command line. The order in which you specify the options does not matter, just make sure that all the needed information is provided.
 
-		Usage: TheTerminator.exe -? | -k <process_name> [-r <old_filename> -n <new_filename> | -d <filename>]
+    Usage: TheTerminator.exe -? | -k <process_name> [-r <old_filename> -n <new_filename> | -d <filename>]
 
-		Options:
-		  -k, -K         Kills running process by name.
-		  -r, -R         Use with -k plus it renames a file.
-		  -n, -N         Use with -r to specify new filename.
-		  -d, -D         Use with -k plus it deletes a file.
-		  -?, -h, -H     Displays this usage information.
+    Options:
+      -k, -K         Kills running process by name.
+      -r, -R         Use with -k plus it renames a file.
+      -n, -N         Use with -r to specify new filename.
+      -d, -D         Use with -k plus it deletes a file.
+      -?, -h, -H     Displays this usage information.
 
 ## GCC compiler
 I used Orwell's fork of Dev-C++ v5.11 running TDM-GCC v4.9.2 with 32/64-bit support. See Orwell's blog http://orwelldevcpp.blogspot.com for more information and download links. If you compile the code without using the provided project files, you may need to add the compiler option -std=gnu11 to add support for raw strings as this is what I used for the graphics, which is a GNU extension. In my brief testing, I only got the raw strings to work with TDM-GCC, so if you can't, then you'll have to escape or replace the text-based graphic altogether. 
