@@ -1,7 +1,7 @@
 # The Terminator
 This tool is used for killing processes by name and renaming or deleting files that have been locked by that process. I originally created this tool as a way to delete a file that was locked by the explorer.exe process even after a reboot. Finding it useful on occasion, I later decided to expand the features of the program and make it more usable for others. If you launch the program directly, it will load a text-based user interface. In addition to this, you can run it via the command line by passing different arguments to the program, which is useful for running the program as part of a script or batch job.
 
-![alt text](https://github.com/StevenJDH/The-Terminator/raw/master/terminator-ss.jpg "Screenshot")
+![Program Screenshot](https://github.com/StevenJDH/The-Terminator/raw/master/terminator-ss.jpg "Screenshot")
 
 Releases: https://github.com/StevenJDH/The-Terminator/releases
 
@@ -26,8 +26,8 @@ Below is the usage information that is needed to run the program via the command
       -d, -D         Use with -k plus it deletes a file.
       -?, -h, -H     Displays this usage information.
 
-## GCC compiler
-I used Orwell's fork of Dev-C++ v5.11 running TDM-GCC v4.9.2 with 32/64-bit support. See Orwell's blog http://orwelldevcpp.blogspot.com for more information and download links. If you compile the code without using the provided project files, you may need to add the compiler option -std=gnu11 to add support for raw strings as this is what I used for the graphics, which is a GNU extension. In my brief testing, I only got the raw strings to work with TDM-GCC, so if you can't, then you'll have to escape or replace the text-based graphic altogether. 
+## GCC compiler support
+The project was created using Orwell's fork of Dev-C++ v5.11 running TDM-GCC v4.9.2 with 32/64-bit support. See Orwell's blog http://orwelldevcpp.blogspot.com for more information and download links. If you compile the code without using the provided project files, you may need to add the compiler option -std=gnu11 to add support for raw strings as this is what I used for the graphics, which is a GNU extension. As of GCC 5, that compiler option is on by default. In my brief testing, I successfully compiled the source file with the latest versions of TDM-GCC and MinGW-w64, and while Cygwin64 does compile, it has issues with the console color and the Windows-specific commands, but this was expected. 
 
 ## Do you have any questions?
 Many commonly asked questions are answered in the FAQ:
