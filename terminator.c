@@ -1,5 +1,5 @@
 /**
- * This file is part of The Terminator <https://github.com/StevenJDH/The-Terminator>.
+ * The Terminator <https://github.com/StevenJDH/The-Terminator>.
  * Copyright (C) 2018 Steven Jenkins De Haro.
  *
  * This program is free software: you can redistribute it and/or modify
