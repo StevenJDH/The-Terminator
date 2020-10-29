@@ -1,7 +1,12 @@
 # The Terminator
+
+![GitHub All Releases](https://img.shields.io/github/downloads/StevenJDH/The-Terminator/total)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/StevenJDH/The-Terminator?include_prereleases)
+![GitHub](https://img.shields.io/github/license/StevenJDH/The-Terminator)
+
 This tool is used for killing processes by name and renaming or deleting files that have been locked by that process. I originally created this tool as a way to delete a file that was locked by the explorer.exe process even after a reboot. Finding it useful on occasion, I later decided to expand the features of the program and make it more usable for others. If you launch the program directly, it will load a text-based user interface. In addition to this, you can run it via the command line by passing different arguments to the program, which is useful for running the program as part of a script or batch job.
 
-![Program Screenshot](https://github.com/StevenJDH/The-Terminator/raw/master/terminator-ss.jpg "Screenshot")
+![Program Screenshot](terminator-ss.jpg "Screenshot")
 
 Releases: [https://github.com/StevenJDH/The-Terminator/releases](https://github.com/StevenJDH/The-Terminator/releases)
 
@@ -32,9 +37,6 @@ The project was created using Orwell's fork of Dev-C++ v5.11 running TDM-GCC v4.
 ## Do you have any questions?
 Many commonly asked questions are answered in the FAQ:
 [https://github.com/StevenJDH/The-Terminator/wiki/FAQ](https://github.com/StevenJDH/The-Terminator/wiki/FAQ)
-
-## Need to contact me?
-I can be reached here directly at [https://21.co/stevenjdh](https://21.co/stevenjdh "Contact Page")
 
 ## Want to show your support?
 
